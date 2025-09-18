@@ -27,15 +27,15 @@ export default function LandingPage() {
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
               <Link href="/signup" passHref>
-                <button className="bg-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105 border-2 border-blue-600">
-                  Sign Up Now
-                </button>
-              </Link>
-              <Link href="/login" passHref>
-                <button className="bg-white text-blue-600 font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition duration-300 transform hover:scale-105 border-2 border-blue-600">
-                  Log In
-                </button>
-              </Link>
+              <button className="bg-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105 border-2 border-blue-600">
+                Sign Up Now
+              </button>
+            </Link>
+            <Link href="/login" passHref>
+              <button className="bg-white text-blue-600 font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition duration-300 transform hover:scale-105 border-2 border-blue-600">
+                Log In
+              </button>
+            </Link>
             </div>
           </div>
         </div>
