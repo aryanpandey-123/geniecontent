@@ -1,4 +1,6 @@
-// This is signup page for the application.
+// This is the change password page.
+
+// This is the login page for the application.
 
 'use client';
 
@@ -7,40 +9,25 @@ import { useState } from 'react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 
-export default function SignupPage() {
-    const [showpassword, setShowPassword] = useState(false);
+export default function ChangePassword() {
+    const [shownewpassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [newpassword, setNewPassword] = useState("");
     const [confirmpassword, setConfirmPassword] = useState("");
     const router = useRouter();
-    const [emailError, setEmailError] = useState("");
-    const [passwordError, setPasswordError] = useState("");
+    const [newpasswordError, setNewPasswordError] = useState("");
     const [confirmpasswordError, setConfirmPasswordError] = useState("");
-    const validateEmail = (email: string) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-    };
+    const [showMessage, setShowMessage] = useState(false);
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
         let valid = true;
 
-        if (!email) {
-            setEmailError("Email is required");
-            valid = false;
-        } else if (!validateEmail(email)) {
-            setEmailError("Enter a valid email address");
+        if (!newpassword) {
+            setNewPasswordError("New Password is required");
             valid = false;
         } else {
-            setEmailError("");
-        }
-
-        if (!password) {
-            setPasswordError("Password is required");
-            valid = false;
-        } else {
-            setPasswordError("");
+            setNewPasswordError("");
         }
 
         if (!confirmpassword) {
@@ -51,8 +38,11 @@ export default function SignupPage() {
         }
 
         if (valid) {
-            // router.push("/dashboard");
-            alert("Sign Up Successfull!!")
+            setShowMessage(true);
+
+            setTimeout(() => {
+                router.push("/auth/login");
+            }, 1500);
         }
     };
     return (
@@ -67,50 +57,33 @@ export default function SignupPage() {
                 </nav>
                 <div className="flex flex-col items-center justify-center space-y-8">
                     <div className="flex-1 space-y-6 max-w-xl mx-auto">
-                        <h2 className="text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight">
-                            Sign Up
+                        <h2 className="text-3xl lg:text-5xl font-extrabold text-gray-900 leading-tight">
+                            Change Password
                         </h2>
                     </div>
                     <form className='space-y-5'>
                         <div className='relative'>
                             <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                placeholder='Email'
-                                value={email}
-                                autoComplete="email"
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="w-full px-5 py-3 pr-10 rounded-3xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200 bg-white text-gray-800"
-                            />
-                            {emailError && 
-                                <div className="absolute top-full left-0 mt-1 bg-white text-red-600 text-sm rounded-md px-3 py-1 shadow-lg z-10">
-                                    {emailError}
-                                </div>
-                            }
-                        </div>
-                        <div className='relative'>
-                            <input
-                                id="password"
-                                name="password"
-                                type={showpassword ? 'text' : 'password'}
-                                placeholder='Password'
+                                id="newpassword"
+                                name="newpassword"
+                                type={shownewpassword ? 'text' : 'password'}
+                                placeholder='New Password'
                                 autoComplete="new-password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={newpassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
                                 className="w-full px-5 py-3 pr-10 rounded-3xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200 bg-white text-gray-800"
                             />
-                            {passwordError && 
+                            {newpasswordError && 
                                 <div className="absolute top-full left-0 mt-1 bg-white text-red-600 text-sm rounded-md px-3 py-1 shadow-lg z-10">
-                                    {passwordError}
+                                    {newpasswordError}
                                 </div>
                             }
                             <button
                                 type="button"
-                                onClick={() => setShowPassword(!showpassword)}
+                                onClick={() => setShowNewPassword(!shownewpassword)}
                                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
                             >
-                                {showpassword ? (
+                                {shownewpassword ? (
                                     <EyeIcon className="h-5 w-5" />
                                 ) : (
                                     <EyeSlashIcon className="h-5 w-5" />
@@ -148,17 +121,19 @@ export default function SignupPage() {
                     </form>
                     <form onSubmit={handleLogin}>
                         <button
-                            className="bg-blue-600 text-white font-semibold py-2.5 px-6 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105 border-2 border-blue-600 inline-block text-center"
+                            type="submit"
+                            disabled={showMessage}
+                            className={`bg-blue-600 text-white font-semibold py-2.5 px-6 rounded-full shadow-lg transition duration-300 transform border-2 border-blue-600 inline-block text-center 
+                            ${showMessage ? "opacity-50 cursor-not-allowed" : "hover:bg-blue-700 hover:scale-105"}`}
                         >
-                            Sign Up
+                            Change Password
                         </button>
+                        {showMessage && (
+                            <div className="mt-4 text-green-700 bg-green-100 px-4 py-2 rounded-md shadow-sm">
+                                Password Changed Successfully!
+                            </div>
+                        )}
                     </form>
-                    <p className="text-gray-500 text-sm mt-1">
-                        Already have an account?{' '}
-                        <Link href="/auth/login" className="text-blue-600 hover:underline cursor-pointer font-medium">
-                            Log In
-                        </Link>
-                    </p>
                 </div>
             </div>
         </div>
