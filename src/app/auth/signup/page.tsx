@@ -58,7 +58,7 @@ export default function SignupPage() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-100 via-green-100 to-purple-100 flex items-center justify-center p-8 font-sans">
             <div className="relative bg-white/70 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12 lg:p-16 max-w-6xl w-full text-center">
-                <nav className="flex items-center justify-between mb-12">
+                <nav className="flex items-center justify-between mb-2">
                     <div className="flex-1 flex justify-center md:justify-start space-x-2">
                         <Link href="/">
                             <div className="text-3xl font-bold text-gray-800 ">Genie Content</div>

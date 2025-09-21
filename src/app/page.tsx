@@ -7,7 +7,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-green-100 to-purple-100 flex items-center justify-center p-8 font-sans">
       <div className="relative bg-white/70 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12 lg:p-16 max-w-6xl w-full text-center">
 
-        <nav className="flex flex-col items-center space-y-2 md:flex-row md:items-center md:justify-between mb-12">
+        <nav className="flex flex-col items-center space-y-2 md:flex-row md:items-center md:justify-between mb-10">
           {/* <div className="flex-1 flex justify-center md:justify-start space-x-2"> */}
           <div className="text-3xl font-bold text-gray-800 ">Genie Content</div>
           {/* </div> */}
@@ -17,6 +17,9 @@ export default function LandingPage() {
           </Link>
           {/* </div> */}
         </nav>
+        {/* <div className="relative mt-3 mb-8">
+          <div className="h-px bg-gray-200 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"></div>
+        </div> */}
 
         <div className="flex flex-col md:flex-row items-center justify-center md:justify-between space-y-8 md:space-y-0 md:space-x-16">
           <div className="flex-1 space-y-6 max-w-xl mx-auto">

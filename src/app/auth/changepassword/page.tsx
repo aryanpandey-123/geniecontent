@@ -1,7 +1,5 @@
 // This is the change password page.
 
-// This is the login page for the application.
-
 'use client';
 
 import Link from 'next/link';
