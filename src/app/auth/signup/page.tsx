@@ -17,6 +17,7 @@ export default function SignupPage() {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [confirmpasswordError, setConfirmPasswordError] = useState("");
+    const [showMessage, setShowMessage] = useState(false);
     const validateEmail = (email: string) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(email);
@@ -51,8 +52,11 @@ export default function SignupPage() {
         }
 
         if (valid) {
-            // router.push("/dashboard");
-            alert("Sign Up Successfull!!")
+            setShowMessage(true);
+
+            setTimeout(() => {
+                router.push("/auth/login");
+            }, 1500);
         }
     };
     return (
@@ -152,6 +156,11 @@ export default function SignupPage() {
                         >
                             Sign Up
                         </button>
+                        {showMessage && (
+                            <div className="mt-4 text-green-700 bg-green-100 px-4 py-2 rounded-md shadow-sm">
+                                Welcome abroad! Your account has been created.
+                            </div>
+                        )}
                     </form>
                     <p className="text-gray-500 text-sm mt-1">
                         Already have an account?{' '}
