@@ -42,8 +42,8 @@ export default function LoginPage() {
         }
 
         if (valid) {
-            // router.push("/dashboard");
-            alert("Login Successfull!!")
+            router.push("/dashboard");
+            // alert("Login Successfull!!")
         }
     };
     return (
