@@ -104,4 +104,4 @@ Distributed under the **MIT License**. See `LICENSE` for more details.
 
 [![GitHub](https://img.shields.io/badge/-Akash-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/theg0607)
 [![LinkedIn](https://img.shields.io/badge/-Akash-blue?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/akash-rajput-79b384337)
-[![Instagram](https://img.shields.io/badge/-@Aryan-1DA1F2?style=flat-square&logo=Instagram&logoColor=white)](https://www.instagram.com/theg0607/)
+[![Instagram](https://img.shields.io/badge/-@Akash-1DA1F2?style=flat-square&logo=Instagram&logoColor=white)](https://www.instagram.com/theg0607/)
