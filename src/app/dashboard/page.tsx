@@ -14,8 +14,6 @@ import {
 } from "react-icons/lu";
 import { RxAvatar } from "react-icons/rx";
 
-
-
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const menuItems = [
