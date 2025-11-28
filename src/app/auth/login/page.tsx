@@ -43,59 +43,64 @@ export default function LoginPage() {
 
         if (valid) {
             router.push("/dashboard");
-            // alert("Login Successfull!!")
         }
     };
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-100 via-green-100 to-purple-100 flex items-center justify-center p-8 font-sans">
             <div className="relative bg-white/70 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12 lg:p-16 max-w-6xl w-full text-center">
                 <nav className="flex items-center justify-between mb-10">
                     <div className="flex-1 flex justify-center md:justify-start space-x-2">
                         <Link href="/">
-                            <div className="text-3xl font-bold text-gray-800 ">Genie Content</div>
+                            <div className="text-3xl font-bold text-gray-800">Genie Content</div>
                         </Link>
                     </div>
                 </nav>
+
                 <div className="flex flex-col items-center justify-center space-y-8">
                     <div className="flex-1 space-y-6 max-w-xl mx-auto">
                         <h2 className="text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight">
                             Welcome Back
                         </h2>
                     </div>
-                    <form className='space-y-5'>
-                        <div className='relative'>
+
+                    <form className="space-y-5" onSubmit={handleLogin}>
+                        <div className="relative">
                             <input
                                 id="email"
                                 name="email"
                                 type="email"
-                                placeholder='Email'
+                                placeholder="Email"
                                 value={email}
                                 autoComplete="email"
+                                autoFocus
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="w-full px-5 py-3 pr-10 rounded-3xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200 bg-white text-gray-800"
                             />
-                            {emailError && 
+                            {emailError && (
                                 <div className="absolute top-full left-0 mt-1 bg-white text-red-600 text-sm rounded-md px-3 py-1 shadow-lg z-10">
                                     {emailError}
                                 </div>
-                            }
+                            )}
                         </div>
-                        <div className='relative'>
+
+                        <div className="relative">
                             <input
                                 id="password"
                                 name="password"
                                 type={showPassword ? 'text' : 'password'}
-                                placeholder='Password'
-                                autoComplete="new-password"
+                                placeholder="Password"
+                                autoComplete="current-password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="w-full px-5 py-3 pr-10 rounded-3xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200 bg-white text-gray-800"
                             />
-                            {passwordError && 
+                            {passwordError && (
                                 <div className="absolute top-full left-0 mt-1 bg-white text-red-600 text-sm rounded-md px-3 py-1 shadow-lg z-10">
                                     {passwordError}
                                 </div>
-                            }
+                            )}
+
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
@@ -108,19 +113,21 @@ export default function LoginPage() {
                                 )}
                             </button>
                         </div>
-                    </form>
-                    <form onSubmit={handleLogin}>
+
                         <button
+                            type="submit"
                             className="bg-blue-600 text-white font-semibold py-2.5 px-6 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105 border-2 border-blue-600 inline-block text-center"
                         >
                             Login
                         </button>
                     </form>
+
                     <p className="text-gray-500 text-sm mt-0 leading-none">
                         <Link href="/auth/forgotpassword" className="text-blue-600 hover:underline cursor-pointer font-medium">
                             Forgot Password?
                         </Link>
                     </p>
+
                     <p className="text-gray-500 text-sm mt-0 leading-none">
                         Don't have an account?{' '}
                         <Link href="/auth/signup" className="text-blue-600 hover:underline cursor-pointer font-medium">
