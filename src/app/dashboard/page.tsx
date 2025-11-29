@@ -50,7 +50,7 @@ export default function DashboardPage() {
           <input
             type="text"
             placeholder="Search content type..."
-            className="flex-1 p-3 rounded-xl shadow bg-white/70 backdrop-blur-md border border-gray-200"
+            className="flex-1 p-3 rounded-xl shadow bg-white/70 backdrop-blur-md border border-gray-200 placeholder-gray-600 text-gray-900"
           />
 
           <button className="bg-blue-600 text-white font-semibold px-6 py-3 rounded-xl shadow hover:bg-blue-700">

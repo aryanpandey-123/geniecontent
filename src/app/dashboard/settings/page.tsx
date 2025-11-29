@@ -17,7 +17,7 @@ export default function SettingsPage() {
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full p-3 rounded-xl border bg-white/70"
+            className="w-full p-3 rounded-xl border bg-white/70 placeholder-gray-600 text-gray-500"
             placeholder="Your name"
           />
         </div>
@@ -27,7 +27,7 @@ export default function SettingsPage() {
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-3 rounded-xl border bg-white/70"
+            className="w-full p-3 rounded-xl border bg-white/70 placeholder-gray-600 text-gray-500"
             placeholder="Your email"
           />
         </div>

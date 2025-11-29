@@ -103,7 +103,7 @@ ${sampleText(selectedTemplate, title, tone, length, keywords)}`
             <input
               value={title}
               onChange={e => setTitle(e.target.value)}
-              className="w-full p-3 rounded-xl border bg-white/70"
+              className="w-full p-3 rounded-xl border bg-white/70 text-gray-900"
             />
           </div>
 
@@ -112,7 +112,7 @@ ${sampleText(selectedTemplate, title, tone, length, keywords)}`
             <input
               value={audience}
               onChange={e => setAudience(e.target.value)}
-              className="w-full p-3 rounded-xl border bg-white/70"
+              className="w-full p-3 rounded-xl border bg-white/70 text-gray-900"
             />
           </div>
 
@@ -121,7 +121,7 @@ ${sampleText(selectedTemplate, title, tone, length, keywords)}`
             <select
               value={tone}
               onChange={e => setTone(e.target.value)}
-              className="w-full p-3 rounded-xl border bg-white/70"
+              className="w-full p-3 rounded-xl border bg-white/70 text-gray-900"
             >
               {tones.map(t => <option key={t}>{t}</option>)}
             </select>
@@ -132,7 +132,7 @@ ${sampleText(selectedTemplate, title, tone, length, keywords)}`
             <select
               value={length}
               onChange={e => setLength(e.target.value)}
-              className="w-full p-3 rounded-xl border bg-white/70"
+              className="w-full p-3 rounded-xl border bg-white/70 text-gray-900"
             >
               {lengths.map(l => <option key={l}>{l}</option>)}
             </select>
@@ -143,7 +143,7 @@ ${sampleText(selectedTemplate, title, tone, length, keywords)}`
             <input
               value={keywords}
               onChange={e => setKeywords(e.target.value)}
-              className="w-full p-3 rounded-xl border bg-white/70"
+              className="w-full p-3 rounded-xl border bg-white/70 text-gray-900"
             />
           </div>
 
@@ -161,7 +161,7 @@ ${sampleText(selectedTemplate, title, tone, length, keywords)}`
         <button
           onClick={copyOutput}
           disabled={!output}
-          className="bg-white/70 border px-6 py-3 rounded-xl flex items-center gap-2"
+          className="bg-white/70 border px-6 py-3 rounded-xl flex items-center gap-2 text-gray-900"
         >
           <LuCopy /> Copy
         </button>
@@ -169,7 +169,7 @@ ${sampleText(selectedTemplate, title, tone, length, keywords)}`
         <button
           onClick={saveOutput}
           disabled={!output}
-          className="bg-white/70 border px-6 py-3 rounded-xl flex items-center gap-2"
+          className="bg-white/70 border px-6 py-3 rounded-xl flex items-center gap-2 text-gray-900"
         >
           <LuSave /> Save
         </button>
@@ -177,7 +177,7 @@ ${sampleText(selectedTemplate, title, tone, length, keywords)}`
         <button
           onClick={handleGenerate}
           disabled={!output}
-          className="bg-white/70 border px-6 py-3 rounded-xl flex items-center gap-2"
+          className="bg-white/70 border px-6 py-3 rounded-xl flex items-center gap-2 text-gray-900"
         >
           <LuRefreshCw /> Regenerate
         </button>
