@@ -17,7 +17,7 @@ export default function Navbar({ sidebarOpen, setSidebarOpen, navbarLeftClass }:
         fixed top-0 left-0 right-0 z-40 
         bg-white/70 backdrop-blur-md border-b 
         px-4 py-4 flex items-center justify-between 
-        w-full ${navbarLeftClass}
+        w{800} ${navbarLeftClass}
       `}
     >
       <button
