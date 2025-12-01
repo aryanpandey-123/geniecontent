@@ -6,6 +6,7 @@ import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { LuMenu } from 'react-icons/lu';
 import { RxAvatar } from 'react-icons/rx';
+import { useRouter } from 'next/navigation';
 
 export interface MenuItem {
   name: string;
@@ -32,6 +33,8 @@ export default function Sidebar({
 }: SidebarProps) {
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (!isMobile) return;
@@ -60,7 +63,7 @@ export default function Sidebar({
   }, [isMobile, setSidebarOpen]);
 
   const desktopClasses = `
-    hidden lg:flex lg:flex-col h-screen fixed left-0 top-0 transition-[width] duration-300
+    hidden lg:flex lg:flex-col h-screen fixed left-0 top-0 z-30 transition-[width] duration-300
     ${expanded ? 'w-64' : 'w-16'}
   `;
 
@@ -78,7 +81,7 @@ export default function Sidebar({
         role={isMobile ? 'dialog' : undefined}
         aria-modal={isMobile ? true : undefined}
         aria-hidden={isMobile ? !sidebarOpen : undefined}
-        className={`bg-white/80 backdrop-blur-md border-r p-4 ${containerClass}`}
+        className={`bg-white/80 backdrop-blur-md border-r p-4 z-30 ${containerClass}`}
       >
 
         <div className="flex items-center justify-between mb-4">
@@ -114,9 +117,7 @@ export default function Sidebar({
         </nav>
 
         <button
-          onClick={() => {
-            console.log('Logging out...');
-          }}
+          onClick={() => router.push('/')}
           className="mt-auto w-full flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100 focus:outline-none"
           aria-label="Logout"
         >
