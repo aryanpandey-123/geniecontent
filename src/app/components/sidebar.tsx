@@ -64,7 +64,7 @@ export default function Sidebar({
 
   const desktopClasses = `
   hidden lg:flex lg:flex-col h-screen fixed left-0 top-0 
-  z-40 sidebar-slide transition-width duration-300
+  z-40 sidebar-slide transition-all duration-300
   ${expanded ? 'w-64' : 'w-16'}
 `;
 
@@ -116,13 +116,19 @@ export default function Sidebar({
               <Link
                 key={`${item.name}-${i}`}
                 href={item.href}
-                className={`flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100 transition
-                  ${compact ? 'justify-center' : ''}`}
+                className={` group flex items-center space-x-3 p-2 rounded-md 
+                  transition-all duration-200 hover:bg-blue-50/70 hover:shadow-sm hover:border-l-4 hover:border-blue-600
+                  ${compact ? 'justify-center' : ''}  
+                `}
                 onClick={() => isMobile && setSidebarOpen(false)}
               >
-                <span className="text-xl" aria-hidden>
+                <span
+                  className="text-xl transition-all duration-200 group-hover:scale-110 group-hover:text-blue-600"
+                  aria-hidden
+                >
                   {item.icon}
                 </span>
+
                 {(isMobile || expanded) && <span className="text-gray-800 font-medium">{item.name}</span>}
               </Link>
             );

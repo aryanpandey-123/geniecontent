@@ -22,7 +22,12 @@ export default function DashboardPage() {
             {['Generate Social Post', 'Write Ad Copy', 'Blog Introduction', 'Email Campaign'].map((template, i) => (
               <button
                 key={i}
-                className="bg-white/70 backdrop-blur-md p-4 rounded-2xl shadow hover:bg-blue-50 transition font-medium"
+                className="
+                  bg-white/50 backdrop-blur-xl 
+                  p-5 rounded-2xl shadow-sm 
+                  transition-all duration-300 
+                  hover:shadow-lg hover:-translate-y-1 hover:bg-white/70
+                  border border-white/40"
               >
                 {template}
               </button>
