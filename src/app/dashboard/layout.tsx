@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import Sidebar, { MenuItem } from '@/app/components/sidebar';
 import Navbar from '@/app/components/navbar';
 import {
@@ -29,20 +29,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   );
 
   const sidebarWidthPx = expanded ? 256 : 64;
-
   const navbarLeftClass = expanded ? 'lg:ml-64' : 'lg:ml-16';
   const contentLeftClass = expanded ? 'lg:ml-64' : 'lg:ml-16';
 
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty('--sidebar-width', `${sidebarWidthPx}px`);
+    return () => {
+      root.style.removeProperty('--sidebar-width');
+    };
+  }, [sidebarWidthPx]);
+
   return (
-    <div
-      className="min-h-screen bg-gradient-to-br from-blue-100 via-green-100 to-purple-100 font-sans"
-      style={{ ['--sidebar-width' as any]: `${sidebarWidthPx}px` }}
-    >
-      <Navbar
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-        navbarLeftClass={navbarLeftClass}
-      />
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-green-100 to-purple-100 font-sans">
+      <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} navbarLeftClass={navbarLeftClass} />
 
       <Sidebar
         isMobile={false}
