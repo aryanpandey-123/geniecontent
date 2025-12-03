@@ -63,14 +63,17 @@ export default function Sidebar({
   }, [isMobile, setSidebarOpen]);
 
   const desktopClasses = `
-    hidden lg:flex lg:flex-col h-screen fixed left-0 top-0 z-30 transition-[width] duration-300
-    ${expanded ? 'w-64' : 'w-16'}
-  `;
+  hidden lg:flex lg:flex-col h-screen fixed left-0 top-0 
+  z-40 sidebar-slide transition-width duration-300
+  ${expanded ? 'w-64' : 'w-16'}
+`;
 
   const mobileClasses = `
-    fixed top-0 left-0 h-screen w-64 shadow-xl transform transition-transform duration-300 z-50
-    ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-  `;
+  fixed top-0 left-0 h-screen w-64 shadow-xl 
+  transform transition-transform duration-300 
+  z-60 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+`;
+
 
   const containerClass = isMobile ? mobileClasses : desktopClasses;
 
@@ -80,14 +83,24 @@ export default function Sidebar({
         ref={sidebarRef}
         role={isMobile ? 'dialog' : undefined}
         aria-modal={isMobile ? true : undefined}
-        aria-hidden={isMobile ? !sidebarOpen : undefined}
-        className={`bg-white/80 backdrop-blur-md border-r p-4 z-30 ${containerClass}`}
+        inert={isMobile && !sidebarOpen ? true : undefined}
+        className={`bg-white backdrop-blur-md border-r border-white/40 p-4 z-30 ${containerClass}`}
       >
 
         <div className="flex items-center justify-between mb-4">
           <button
             ref={closeBtnRef}
-            onClick={() => (isMobile ? setSidebarOpen(false) : setExpanded(!expanded))}
+            onClick={() => {
+              if (isMobile) {
+                setSidebarOpen(false);
+                if (document.activeElement instanceof HTMLElement) {
+                  document.activeElement.blur();
+                }
+              } else {
+                setExpanded(!expanded);
+              }
+            }}
+
             aria-label={isMobile ? (sidebarOpen ? 'Close sidebar' : 'Open sidebar') : (expanded ? 'Collapse sidebar' : 'Expand sidebar')}
             aria-expanded={!isMobile ? expanded : undefined}
             className="p-2 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
