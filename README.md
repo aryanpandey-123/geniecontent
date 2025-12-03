@@ -1,4 +1,4 @@
-# 🧞 Genie Content
+# 🧞 Genie Content.   
 *AI-Powered Marketing Content Generation Platform*  
 
 <img src="https://raw.githubusercontent.com/aryanpandey-123/geniecontent/main/public/banner.png" alt="Image Description" width="400" height="400">
