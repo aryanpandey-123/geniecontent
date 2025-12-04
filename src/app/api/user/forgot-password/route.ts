@@ -1,13 +1,12 @@
 // app/api/user/forgot-password/route.ts
 import { NextResponse } from "next/server";
-import crypto from "crypto";
 import nodemailer from "nodemailer";
 import { db } from "@/db";
 import { users } from "@/db/schema/user";
 import { eq } from "drizzle-orm";
 
 const OTP_LENGTH = 6;
-const OTP_TTL_MS = 15 * 60 * 1000; // 15 minutes
+const OTP_TTL_MS = 15 * 60 * 1000; 
 
 export async function POST(req: Request) {
   try {
@@ -17,21 +16,19 @@ export async function POST(req: Request) {
 
     const existing = await db.select().from(users).where(eq(users.email, email));
     if (!existing.length) {
-      // do not reveal user existence; return ok
+      
       return NextResponse.json({ ok: true });
     }
 
-    // generate 6-digit numeric OTP
+    
     const otp = (Math.floor(Math.random() * Math.pow(10, OTP_LENGTH))).toString().padStart(OTP_LENGTH, "0");
     const expires = new Date(Date.now() + OTP_TTL_MS);
 
-    // save to DB
     await db.update(users).set({
       otp,
       otpExpires: expires,
     }).where(eq(users.id, existing[0].id));
 
-    // send email via nodemailer (Mailtrap sandbox recommended)
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: Number(process.env.SMTP_PORT || 2525),

@@ -5,7 +5,7 @@ import { db } from "@/db";
 import { users } from "@/db/schema/user";
 import { eq } from "drizzle-orm";
 
-const OTP_SESSION_TTL = 15 * 60; // seconds (15 minutes)
+const OTP_SESSION_TTL = 15 * 60; 
 
 export async function POST(req: Request) {
   try {
@@ -24,11 +24,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: "Invalid OTP" }, { status: 400 });
     }
 
-    // create short-lived token allowing password change (no other rights)
     const payload = { id: user.id, email: user.email, purpose: "otp-session" };
     const token = jwt.sign(payload, process.env.NEXTAUTH_SECRET!, { expiresIn: `${OTP_SESSION_TTL}s` });
 
-    // optional: clear OTP in DB to prevent reuse (you can also keep until change)
     await db.update(users).set({ otp: null, otpExpires: null }).where(eq(users.id, user.id));
 
     return NextResponse.json({ ok: true, otpSessionToken: token });

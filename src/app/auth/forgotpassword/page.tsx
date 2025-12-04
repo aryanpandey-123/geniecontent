@@ -57,8 +57,6 @@ export default function ForgotPassword() {
     try { data = text ? JSON.parse(text) : null; } catch { data = { error: text }; }
 
     if (res.ok && data?.ok && data?.otpSessionToken) {
-      // pass token to change-password page via query param (safer to store in session/localStorage briefly)
-      // we'll redirect with token in query (short-lived)
       router.push(`/auth/changepassword?token=${encodeURIComponent(data.otpSessionToken)}&email=${encodeURIComponent(email)}`);
     } else {
       alert(data?.error || "Invalid OTP");

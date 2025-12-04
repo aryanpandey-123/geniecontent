@@ -28,7 +28,6 @@ export async function POST(req: Request) {
     const hashed = await bcrypt.hash(newPassword, 10);
     await db.update(users).set({
       password: hashed,
-      // clear otp fields just in case
       otp: null,
       otpExpires: null,
     }).where(eq(users.id, userId));
