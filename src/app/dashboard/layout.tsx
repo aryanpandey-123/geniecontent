@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useMemo, useState, useEffect } from 'react';
-import Sidebar, { MenuItem } from '@/app/components/sidebar';
-import Navbar from '@/app/components/navbar';
+import Sidebar, { MenuItem } from '@/src/app/components/sidebar';
+import Navbar from '@/src/app/components/navbar';
 import {
   LuHouse,
   LuPencilLine,

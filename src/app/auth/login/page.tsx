@@ -1,11 +1,10 @@
-// This is the login page for the application.
-
 'use client';
 
 import Link from 'next/link';
 import { useState } from 'react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
@@ -121,6 +120,27 @@ export default function LoginPage() {
                             Login
                         </button>
                     </form>
+
+                    {/* Divider */}
+                    <div className="flex items-center gap-3 w-full max-w-md mt-4">
+                        <div className="flex-1 h-px bg-gray-300" />
+                        <span className="text-gray-500 text-sm">OR</span>
+                        <div className="flex-1 h-px bg-gray-300" />
+                    </div>
+
+                    {/* Google Login Button */}
+                    <button
+                        type="button"
+                        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                        className="flex items-center justify-center gap-3 w-full max-w-md bg-white border border-gray-300 text-gray-700 py-2.5 rounded-full shadow-md hover:bg-gray-100 transition duration-300 transform hover:scale-[1.02]"
+                    >
+                        <img
+                            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                            alt="Google Icon"
+                            className="h-5 w-5"
+                        />
+                        Continue with Google
+                    </button>
 
                     <p className="text-gray-500 text-sm mt-0 leading-none">
                         <Link href="/auth/forgotpassword" className="text-blue-600 hover:underline cursor-pointer font-medium">
