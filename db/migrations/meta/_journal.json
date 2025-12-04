@@ -15,6 +15,20 @@
       "when": 1764822880569,
       "tag": "0001_harsh_gressill",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1764839348053,
+      "tag": "0002_calm_wasp",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1764845983226,
+      "tag": "0003_smart_roulette",
+      "breakpoints": true
     }
   ]
 }

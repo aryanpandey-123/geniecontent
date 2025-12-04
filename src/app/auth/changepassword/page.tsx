@@ -5,7 +5,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function ChangePassword() {
     const [shownewpassword, setShowNewPassword] = useState(false);
@@ -17,32 +17,41 @@ export default function ChangePassword() {
     const [confirmpasswordError, setConfirmPasswordError] = useState("");
     const [showMessage, setShowMessage] = useState(false);
 
-    const handleLogin = (e: React.FormEvent) => {
+    const params = useSearchParams();
+    const token = params.get("token");
+    const handleChangePassword = async (e: React.FormEvent) => {
         e.preventDefault();
-        let valid = true;
+        if (!newpassword) { setNewPasswordError("New Password is required"); return; }
+        if (!confirmpassword) { setConfirmPasswordError("Confirm Password is required"); return; }
+        if (newpassword !== confirmpassword) { setConfirmPasswordError("Passwords do not match"); return; }
 
-        if (!newpassword) {
-            setNewPasswordError("New Password is required");
-            valid = false;
-        } else {
-            setNewPasswordError("");
+        if (!token) {
+            alert("Missing token. Please restart the reset flow.");
+            return;
         }
 
-        if (!confirmpassword) {
-            setConfirmPasswordError("Confirm Password is required");
-            valid = false;
-        } else {
-            setConfirmPasswordError("");
-        }
+        try {
+            const res = await fetch("/api/user/change-password", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ otpSessionToken: token, newPassword: newpassword }),
+            });
+            const text = await res.text();
+            let data;
+            try { data = text ? JSON.parse(text) : null; } catch { data = { error: text }; }
 
-        if (valid) {
-            setShowMessage(true);
-
-            setTimeout(() => {
-                router.push("/auth/login");
-            }, 1500);
+            if (res.ok && data?.ok) {
+                setShowMessage(true);
+                setTimeout(() => router.push("/auth/login"), 1500);
+            } else {
+                alert(data?.error || "Reset failed");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Network error");
         }
     };
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-100 via-green-100 to-purple-100 flex items-center justify-center p-8 font-sans">
             <div className="relative bg-white/70 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12 lg:p-16 max-w-6xl w-full text-center">
@@ -71,7 +80,7 @@ export default function ChangePassword() {
                                 onChange={(e) => setNewPassword(e.target.value)}
                                 className="w-full px-5 py-3 pr-10 rounded-3xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200 bg-white text-gray-800"
                             />
-                            {newpasswordError && 
+                            {newpasswordError &&
                                 <div className="absolute top-full left-0 mt-1 bg-white text-red-600 text-sm rounded-md px-3 py-1 shadow-lg z-10">
                                     {newpasswordError}
                                 </div>
@@ -99,7 +108,7 @@ export default function ChangePassword() {
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 className="w-full px-5 py-3 pr-10 rounded-3xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200 bg-white text-gray-800"
                             />
-                            {confirmpasswordError && 
+                            {confirmpasswordError &&
                                 <div className="absolute top-full left-0 mt-1 bg-white text-red-600 text-sm rounded-md px-3 py-1 shadow-lg z-10">
                                     {confirmpasswordError}
                                 </div>
@@ -117,7 +126,7 @@ export default function ChangePassword() {
                             </button>
                         </div>
                     </form>
-                    <form onSubmit={handleLogin}>
+                    <form onSubmit={handleChangePassword}>
                         <button
                             type="submit"
                             disabled={showMessage}

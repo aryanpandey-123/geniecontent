@@ -13,46 +13,71 @@ export default function ForgotPassword() {
     const [emailError, setEmailError] = useState("");
     const [otpError, setOtpError] = useState("");
     const router = useRouter();
-    const validateEmail = (email: string) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-    };
 
-    const handleGetOtp = () => {
+    const handleGetOtp = async () => {
+  if (!email) { setEmailError("Email is required"); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setEmailError("Enter a valid email"); return; }
+  setEmailError("");
 
-        let valid = true;
-        if (!email) {
-            setEmailError("Email is required");
-            valid = false;
-            return;
-        } else if (!validateEmail(email)) {
-            setEmailError("Enter a valid email address");
-            valid = false;
-            return;
-        } else {
-            setEmailError("");
-        }
-        setStep(2);
-    };
+  try {
+    const res = await fetch("/api/user/forgot-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    const text = await res.text();
+    let data;
+    try { data = text ? JSON.parse(text) : null; } catch { data = { error: text }; }
 
-    const handleVerifyOtp = () => {
-        let otp_present = true;
-        if (!otp) {
-            setOtpError("OTP is required");
-            otp_present = false;
-            return;
-        } else {
-            setOtpError("");
-        }
-        if (otp_present) {
-            router.push("/auth/changepassword");
-        }
-    };
+    if (res.ok && data?.ok) {
+      setStep(2);
+    } else {
+      alert(data?.error || "Failed to send OTP");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Network error");
+  }
+};
+
+
+
+    const handleVerifyOtp = async () => {
+  if (!otp) { setOtpError("OTP is required"); return; }
+  setOtpError("");
+
+  try {
+    const res = await fetch("/api/user/verify-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, otp }),
+    });
+    const text = await res.text();
+    let data;
+    try { data = text ? JSON.parse(text) : null; } catch { data = { error: text }; }
+
+    if (res.ok && data?.ok && data?.otpSessionToken) {
+      // pass token to change-password page via query param (safer to store in session/localStorage briefly)
+      // we'll redirect with token in query (short-lived)
+      router.push(`/auth/changepassword?token=${encodeURIComponent(data.otpSessionToken)}&email=${encodeURIComponent(email)}`);
+    } else {
+      alert(data?.error || "Invalid OTP");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Network error");
+  }
+};
+
+
 
     const handleWrongEmail = () => {
         setStep(1);
         setOtp("");
+        setOtpError("");
+        setEmailError("");
     };
+
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-100 via-green-100 to-purple-100 flex items-center justify-center p-8 font-sans">
@@ -86,7 +111,7 @@ export default function ForgotPassword() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="w-full px-5 py-3 pr-10 rounded-3xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200 bg-white text-gray-800"
                             />
-                            {emailError && 
+                            {emailError &&
                                 <div className="absolute top-full left-0 mt-1 bg-white text-red-600 text-sm rounded-md px-3 py-1 shadow-lg z-10">
                                     {emailError}
                                 </div>
@@ -116,7 +141,7 @@ export default function ForgotPassword() {
                                         onChange={(e) => setOtp(e.target.value)}
                                         className="w-full px-5 py-3 pr-10 rounded-3xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200 bg-white text-gray-800"
                                     />
-                                    {otpError && 
+                                    {otpError &&
                                         <div className="absolute top-full left-0 mt-1 bg-white text-red-600 text-sm rounded-md px-3 py-1 shadow-lg z-10">
                                             {otpError}
                                         </div>

@@ -19,7 +19,7 @@ export default function LoginPage() {
         return regex.test(email);
     };
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         let valid = true;
 
@@ -40,10 +40,38 @@ export default function LoginPage() {
             setPasswordError("");
         }
 
-        if (valid) {
-            router.push("/dashboard");
+        if (!valid) return;
+
+        try {
+            const res = await fetch("/api/user/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const text = await res.text();
+            let data;
+
+            try {
+                data = JSON.parse(text);
+            } catch {
+                data = { error: text };
+            }
+
+
+            if (res.ok && data.token) {
+                localStorage.setItem("token", data.token);
+                router.push("/dashboard");
+            } else {
+                alert(data?.error || "Login failed");
+            }
+
+        } catch (err) {
+            console.error(err);
+            alert("Something went wrong. Please try again.");
         }
     };
+
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-100 via-green-100 to-purple-100 flex items-center justify-center p-8 font-sans">

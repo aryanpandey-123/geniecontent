@@ -11,7 +11,7 @@ export default function SignupPage() {
     const [showpassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [email, setEmail] = useState("");
-       const [password, setPassword] = useState("");
+    const [password, setPassword] = useState("");
     const [confirmpassword, setConfirmPassword] = useState("");
     const router = useRouter();
     const [emailError, setEmailError] = useState("");
@@ -24,7 +24,7 @@ export default function SignupPage() {
         return regex.test(email);
     };
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         let valid = true;
 
@@ -48,17 +48,50 @@ export default function SignupPage() {
         if (!confirmpassword) {
             setConfirmPasswordError("Confirm Password is required");
             valid = false;
+        } else if (confirmpassword !== password) {
+            setConfirmPasswordError("Passwords do not match");
+            valid = false;
         } else {
             setConfirmPasswordError("");
         }
 
-        if (valid) {
-            setShowMessage(true);
-            setTimeout(() => {
-                router.push("/auth/login");
-            }, 1500);
+        if (!valid) return;
+
+        try {
+            const res = await fetch("/api/user/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+            });
+
+            const text = await res.text();
+            let data;
+
+            try {
+                data = JSON.parse(text);
+            } catch {
+                data = { error: text };
+            }
+
+
+            if (res.ok && data.ok) {
+                setShowMessage(true);
+
+                setTimeout(() => {
+                    router.push("/auth/login");
+                }, 1500);
+            } else {
+                alert(data.error || "Signup failed");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Network error");
         }
     };
+
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-100 via-green-100 to-purple-100 flex items-center justify-center p-8 font-sans">
